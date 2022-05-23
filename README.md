@@ -10,6 +10,3 @@
 pip install makefile-book
 ```
 
-## 致谢
-
-本项目部分内容参考自 [跟我一起写Makefile](https://github.com/seisman/how-to-write-makefile)。

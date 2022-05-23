@@ -1,1 +1,4 @@
 draft/
+*.o
+*.out
+obj/

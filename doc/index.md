@@ -2,9 +2,11 @@
 ```
 
 ```{toctree}
-:maxdepth: 2
+:maxdepth: 3
+:hidden:
 
-demo
+tutorials/index
+refs
 ```
 
 ## 目录和索引
