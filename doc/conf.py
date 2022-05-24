@@ -84,20 +84,19 @@ comments_config = {
 }
 
 # MyST NB 设置
-nb_render_priority = {
-    "html": (
-        "application/vnd.jupyter.widget-view+json",
-        "application/javascript",
-        "text/html",
-        "image/svg+xml",
-        "image/png",
-        "image/jpeg",
-        "text/markdown",
-        "text/latex",
-        "text/plain",
-    ),
-    'gettext': ()
-}
+nb_mime_priority_overrides = [
+  ('html', 'text/html', 0),
+  ('latex', 'image/jpeg', None),
+  ('*', 'customtype', 20),
+  ("gettext", 'customtype', None)
+]
+# MyST NB 设置
+nb_mime_priority_overrides = [
+  ('html', 'text/html', 0),
+  ('latex', 'image/jpeg', None),
+  ('*', 'customtype', 20),
+  ("gettext", 'customtype', None)
+]
 
 extlinks = {
     # 'duref': ('https://docutils.sourceforge.io/docs/ref/rst/'
@@ -273,5 +272,5 @@ post_date_format_short = '%b %d, %Y'
 # 如果你希望stderr和stdout中的每个输出都被合并成一个流，请使用以下配置。
 # 避免将 jupter 执行报错的信息输出到 cmd
 nb_merge_streams = True
-execution_allow_errors = True
-jupyter_execute_notebooks = "off"
+nb_execution_allow_errors = True
+nb_execution_mode = "off"
