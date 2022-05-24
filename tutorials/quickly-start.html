@@ -1,0 +1,606 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Makefile 快速入门 &#8212; makefile-book 0.1 文档</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "xinetzone/makefile-book");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../_static/translations.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+    <link rel="canonical" href="https://xinetzone.github.io/makefile-book/tutorials/quickly-start.html" />
+    <link rel="shortcut icon" href="../_static/favicon.jpg"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="参考" href="../refs.html" />
+    <link rel="prev" title="教程" href="index.html" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="zh_CN">
+    
+
+    <!-- Google Analytics -->
+     
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../posts/atom.xml"
+  title="Blog"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="index.html">
+   教程
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Makefile 快速入门
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../refs.html">
+   参考
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            <div>
+版权所有 © 2021 <a href="https://xinetzone.github.io/">xinetzone</a></div>
+<div>由 <a href="https://ebp.jupyterbook.org/">EBP</a> 提供技术支持</div>
+<a href="https://makefile-book.readthedocs.io/zh/latest/">版本切换</a>
+
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/xinetzone/makefile-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/xinetzone/makefile-book/issues/new?title=Issue%20on%20page%20%2Ftutorials/quickly-start.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/xinetzone/makefile-book/edit/main/docs/tutorials/quickly-start.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/tutorials/quickly-start.md.txt"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Makefile 快速入门</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                 <section class="tex2jax_ignore mathjax_ignore" id="makefile">
+<h1>Makefile 快速入门<a class="headerlink" href="#makefile" title="永久链接至标题">#</a></h1>
+<p>参考：<span id="id1">[<a class="reference internal" href="../refs.html#id3" title="Bruce A. Maxwell. A simple makefile tutorial. \url https://cs.colby.edu/maxwell/courses/tutorials/maketutor/.">Maxwell, n.d.</a>]</span>。</p>
+<p><span class="guilabel">目标</span>：快速、轻松地为中小型项目创建自己的 Makefile。</p>
+<p>Makefile 是组织代码编译的一种简单方法。直接从例子开始：以下三个文件：<a class="reference download internal" download="" href="../_downloads/d35d0f872c20007f3cbfdaa2a13dd39d/hellomake.c"><code class="xref download docutils literal notranslate"><span class="pre">cpp/src/hellomake.c</span></code></a>、<a class="reference download internal" download="" href="../_downloads/35aac24a791479dd007c6bdc2bb732c7/hellofunc.c"><code class="xref download docutils literal notranslate"><span class="pre">cpp/src/hellofunc.c</span></code></a> 和 <a class="reference download internal" download="" href="../_downloads/fe3ae6a942ceaae1e59ad41baf3800f2/hellomake.h"><code class="xref download docutils literal notranslate"><span class="pre">cpp/include/hellomake.h</span></code></a>，分别代表典型的主程序、单独文件中的一些函数代码和 include 文件。</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-3 sd-row-cols-xs-3 sd-row-cols-sm-3 sd-row-cols-md-3 sd-row-cols-lg-3 sd-g-1 sd-g-xs-1 sd-g-sm-1 sd-g-md-1 sd-g-lg-1 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;hellomake.h&gt;</span>
+
+<span class="nb">int</span> <span class="n">main</span><span class="p">(</span><span class="n">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">//</span> <span class="n">调用另一个文件中的函数</span> 
+    <span class="n">my_print_hello_make</span><span class="p">();</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;stdio.h&gt;</span>
+<span class="c1">#include &lt;hellomake.h&gt;</span>
+
+<span class="n">void</span> <span class="n">my_print_hello_make</span><span class="p">(</span><span class="n">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;你好，Makefile！</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="c1"># include 文件示例</span>
+<span class="n">void</span> <span class="n">my_print_hello_make</span><span class="p">(</span><span class="n">void</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>通常，可以通过执行下面的命令来编译这些代码：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> src
+gcc -o hellomake hellomake.c hellofunc.c -I .
+</pre></div>
+</div>
+<p>这将编译两个 <code class="docutils literal notranslate"><span class="pre">.c</span></code> 文件，并将可执行文件命名为 <code class="docutils literal notranslate"><span class="pre">hellomake</span></code>。<code class="docutils literal notranslate"><span class="pre">-I</span> <span class="pre">.</span></code> 被包含，以便 GCC 在当前目录（<code class="docutils literal notranslate"><span class="pre">.</span></code>）中查找 include 文件 <code class="docutils literal notranslate"><span class="pre">hellomake.h</span></code>。在没有 Makefile 的情况下，测试/修改/调试循环的典型方法是在终端中使用向上箭头返回到上一个编译命令，这样就不必每次都输入它，特别是在添加了几个 <code class="docutils literal notranslate"><span class="pre">.c</span></code> 文件之后。</p>
+<p>不幸的是，这种编译方法有两个缺点。首先，如果您丢失了编译命令或切换了计算机，您必须从头开始重新输入它，这是效率最低的。其次，如果您只对一个 <code class="docutils literal notranslate"><span class="pre">.c</span></code> 文件进行更改，那么每次重新编译所有这些文件也是非常耗时和低效的。Makefile 提供了一些便利。</p>
+<p>最简单的 Makefile 如下所示：</p>
+<div class="highlight-Makefile notranslate"><div class="highlight"><pre><span></span><span class="nf">hellomake</span><span class="o">:</span> <span class="n">hellomake</span>.<span class="n">c</span> <span class="n">hellofunc</span>.<span class="n">c</span>
+     gcc -o hellomake hellomake.c hellofunc.c -I .
+</pre></div>
+</div>
+<p>将该规则放入名为 <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> 或 <code class="docutils literal notranslate"><span class="pre">makefile</span></code> 的文件中，然后在命令行上键入 <strong class="program">make</strong>，它将执行 <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> 中编写的编译命令。注意，不带参数的 <strong class="program">make</strong> 执行文件中的第一条规则。此外，通过将命令所依赖的文件列表放在 <code class="docutils literal notranslate"><span class="pre">:</span></code> 之后的第一行，<strong class="program">make</strong> 知道如果其中任何文件发生更改，就需要执行 <code class="docutils literal notranslate"><span class="pre">hellomake</span></code> 规则。立即解决了第 1 个问题，可以避免重复使用向上箭头，查找最后一个编译命令。然而，就只编译最新的更改而言，该系统仍然没有效率。</p>
+<p>需要注意的一件非常重要的事情是，在 <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> 中的 <strong class="program">gcc</strong> 命令之前有制表符。在任何命令的开头都必须有制表符，如果没有这个制表符，<strong class="program">make</strong> 会困扰的。</p>
+<p>为了更有效率，试试下面的方法：</p>
+<div class="highlight-Makefile notranslate"><div class="highlight"><pre><span></span><span class="nv">CC</span> <span class="o">=</span> gcc
+<span class="nv">CFLAGS</span> <span class="o">=</span> -I .
+
+<span class="nf">hellomake</span><span class="o">:</span> <span class="n">hellomake</span>.<span class="n">o</span> <span class="n">hellofunc</span>.<span class="n">o</span>
+	<span class="k">$(</span>CC<span class="k">)</span> -o hellomake hellomake.o hellofunc.o
+</pre></div>
+</div>
+<p>定义一些常量 <strong class="makevar">CC</strong> 和 <strong class="makevar">CFLAGS</strong>。事实证明，它们都是一些特殊的常量，它们通过 <strong class="program">make</strong> 通信来确定想要编译的 <code class="docutils literal notranslate"><span class="pre">hellomake.c</span></code> 和 <code class="docutils literal notranslate"><span class="pre">hellofunc.c</span></code> 文件方式。具体来说，宏 <strong class="makevar">CC</strong> 是要使用的 C 编译器，而 <strong class="makevar">CFLAGS</strong> 是要传递给编译命令的 flags 列表。通过放置目标文件—— <code class="docutils literal notranslate"><span class="pre">hellomake.o</span></code> 和 <code class="docutils literal notranslate"><span class="pre">hellofunc.o</span></code> —— 在依赖项列表和规则中，<strong class="program">make</strong> 知道它必须首先单独编译 <code class="docutils literal notranslate"><span class="pre">.c</span></code> 版本，然后构建可执行的 <code class="docutils literal notranslate"><span class="pre">hellomake</span></code>。</p>
+<p>使用这种形式的 Makefile 对于大多数小型项目来说已经足够了。然而，有件事被遗漏了：对 include 文件的依赖。例如，如果要对 <code class="docutils literal notranslate"><span class="pre">hellomake.h</span></code> 进行更改，<strong class="program">make</strong> 将不会重新编译 <code class="docutils literal notranslate"><span class="pre">.c</span></code> 文件，即使它们需要重新编译。为了解决这个问题，需要告知 <strong class="program">make</strong> 所有的 <code class="docutils literal notranslate"><span class="pre">.c</span></code> 文件依赖于特定的 <code class="docutils literal notranslate"><span class="pre">.h</span></code> 文件。可以通过编写简单的规则并将其添加到 Makefile 来实现这一点。</p>
+<div class="highlight-Makefile notranslate"><div class="highlight"><pre><span></span><span class="nv">CC</span> <span class="o">=</span> gcc
+<span class="nv">CFLAGS</span> <span class="o">=</span> -I .
+<span class="nv">DEPS</span> <span class="o">=</span> hellomake.h
+
+<span class="nf">%.o</span><span class="o">:</span> %.<span class="n">c</span> <span class="k">$(</span><span class="nv">DEPS</span><span class="k">)</span>
+	<span class="k">$(</span>CC<span class="k">)</span> -c -o <span class="nv">$@</span> $&lt; <span class="k">$(</span>CFLAGS<span class="k">)</span>
+
+<span class="nf">hellomake</span><span class="o">:</span> <span class="n">hellomake</span>.<span class="n">o</span> <span class="n">hellofunc</span>.<span class="n">o</span>
+	<span class="k">$(</span>CC<span class="k">)</span> -o hellomake hellomake.o hellofunc.o
+</pre></div>
+</div>
+<p>这一添加首先创建宏 <strong class="makevar">DEPS</strong>，它是 <code class="docutils literal notranslate"><span class="pre">.c</span></code> 文件所依赖的一组 <code class="docutils literal notranslate"><span class="pre">.h</span></code> 文件。然后定义适用于所有后缀为 <code class="docutils literal notranslate"><span class="pre">.o</span></code> 的文件的规则。该规则指出，<code class="docutils literal notranslate"><span class="pre">.o</span></code> 文件依赖于文件的 <code class="docutils literal notranslate"><span class="pre">.c</span></code> 版本和 <strong class="makevar">DEPS</strong> 宏中包含的 <code class="docutils literal notranslate"><span class="pre">.h</span></code> 文件。根据规则，要生成 <code class="docutils literal notranslate"><span class="pre">.o</span></code> 文件， make 需要使用 <strong class="makevar">CC</strong> 宏中定义的编译器编译 <code class="docutils literal notranslate"><span class="pre">.c</span></code> 文件。<code class="docutils literal notranslate"><span class="pre">-c</span></code> 标志表示生成目标文件，<code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">$&#64;</span></code> 表示将编译的输出放在 <code class="docutils literal notranslate"><span class="pre">:</span></code> 左边、<strong class="makevar">$&lt;</strong> 是依赖项列表中的第一项，<strong class="makevar">CFLAGS</strong> 宏的定义如上所述。</p>
+<p>作为最后的简化，使用特殊的宏 <strong class="makevar">$&#64;</strong> 和 <strong class="makevar">$^</strong>，它们分别位于 <strong class="makevar">:</strong> 的左右两侧，以使整个编译规则更加通用。在下面的例子中，所有的 include 文件都应该作为宏 <strong class="makevar">DEPS</strong> 的一部分列出，所有的目标文件都应该作为宏 <strong class="makevar">OBJ</strong> 的一部分列出。</p>
+<div class="highlight-Makefile notranslate"><div class="highlight"><pre><span></span><span class="nv">CC</span> <span class="o">=</span> gcc
+<span class="nv">CFLAGS</span> <span class="o">=</span> -I .
+<span class="nv">DEPS</span> <span class="o">=</span> hellomake.h
+<span class="nv">OBJ</span> <span class="o">=</span> hellomake.o hellofunc.o
+
+<span class="nf">%.o</span><span class="o">:</span> %.<span class="n">c</span> <span class="k">$(</span><span class="nv">DEPS</span><span class="k">)</span>
+	<span class="k">$(</span>CC<span class="k">)</span> -c -o <span class="nv">$@</span> $&lt; <span class="k">$(</span>CFLAGS<span class="k">)</span>
+
+<span class="nf">hellomake</span><span class="o">:</span> <span class="k">$(</span><span class="nv">OBJ</span><span class="k">)</span>
+	<span class="k">$(</span>CC<span class="k">)</span> -o <span class="nv">$@</span> $^ <span class="k">$(</span>CFLAGS<span class="k">)</span>
+</pre></div>
+</div>
+<p>那么，如果想把 <code class="docutils literal notranslate"><span class="pre">.h</span></code> 文件放在 <code class="docutils literal notranslate"><span class="pre">include/</span></code> 目录中，源代码放在 <code class="docutils literal notranslate"><span class="pre">src/</span></code> 目录中，而一些本地库放在 <code class="docutils literal notranslate"><span class="pre">lib/</span></code> 目录中，该怎么办呢？此外，能否隐藏那些到处挂着的烦人的 <code class="docutils literal notranslate"><span class="pre">.o</span></code>文件？答案当然是肯定的。下面的 Makefile 定义了 <code class="docutils literal notranslate"><span class="pre">include/</span></code> 和 <code class="docutils literal notranslate"><span class="pre">lib/</span></code> 目录的路径，并将对象文件放在 <code class="docutils literal notranslate"><span class="pre">obj/</span></code> 目录中。它还为您想要包含的任何库定义了宏，例如数学库 <code class="docutils literal notranslate"><span class="pre">-lm</span></code>。请注意，它还包括一个规则，用于在输入 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code> 时清理源目录和对象目录。<code class="docutils literal notranslate"><span class="pre">.PHONY</span></code> 规则防止 <strong class="program">make</strong> 对名为 <code class="docutils literal notranslate"><span class="pre">clean</span></code> 的文件进行操作。</p>
+<div class="highlight-Makefile notranslate"><div class="highlight"><pre><span></span><span class="nv">IIDIR</span> <span class="o">=</span> include
+<span class="nv">CC</span> <span class="o">=</span> gcc
+<span class="nv">CFLAGS</span> <span class="o">=</span> -I <span class="k">$(</span>IDIR<span class="k">)</span>
+<span class="nv">ODIR</span> <span class="o">=</span> obj
+<span class="nv">LDIR</span> <span class="o">=</span> src
+<span class="nv">LIBS</span> <span class="o">=</span> -lm
+<span class="nv">_DEPS</span> <span class="o">=</span> hellomake.h
+<span class="nv">DEPS</span> <span class="o">=</span> <span class="k">$(</span>patsubst %,<span class="k">$(</span>IDIR<span class="k">)</span>/%,<span class="k">$(</span>_DEPS<span class="k">))</span>
+<span class="nv">_OBJ</span> <span class="o">=</span> hellomake.o hellofunc.o 
+<span class="nv">OBJ</span> <span class="o">=</span> <span class="k">$(</span>patsubst %,<span class="k">$(</span>ODIR<span class="k">)</span>/%,<span class="k">$(</span>_OBJ<span class="k">))</span>
+
+
+<span class="nf">$(ODIR)/%.o</span><span class="o">:</span> <span class="k">$(</span><span class="nv">LDIR</span><span class="k">)</span>/%.<span class="n">c</span> <span class="k">$(</span><span class="nv">DEPS</span><span class="k">)</span>
+	<span class="k">$(</span>CC<span class="k">)</span> -c -o <span class="nv">$@</span> $&lt; <span class="k">$(</span>CFLAGS<span class="k">)</span>
+
+<span class="nf">run</span><span class="o">:</span> <span class="k">$(</span><span class="nv">OBJ</span><span class="k">)</span>
+	<span class="k">$(</span>CC<span class="k">)</span> -o <span class="nv">$@</span> $^ <span class="k">$(</span>CFLAGS<span class="k">)</span> <span class="k">$(</span>LIBS<span class="k">)</span>
+
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">clean</span>
+
+<span class="nf">clean</span><span class="o">:</span>
+	rm -f <span class="k">$(</span>ODIR<span class="k">)</span>/*.o *~ core <span class="k">$(</span>INCDIR<span class="k">)</span>/*~ run
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>目录结构如下：</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/makefile.png"><img alt="../_images/makefile.png" src="../_images/makefile.png" style="width: 600px; height: 300px;" /></a>
+</figure>
+</div>
+<p>现在有了非常好的 Makefile，可以修改它来管理中小型软件项目。可以在 Makefile 中添加多条规则；甚至可以创建调用其他规则的规则。有关 Makefile 和 <code class="docutils literal notranslate"><span class="pre">make</span></code> 函数的更多信息，请参阅 <a class="reference external" href="http://www.gnu.org/software/make/manual/make.html">GNU make Manual</a>，它将告诉您比您想要知道的更多（实际）。</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "xinetzone/makefile-book",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./tutorials"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section">
+   
+</div>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="index.html" title="上一页 页">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">上一页</p>
+            <p class="prev-next-title">教程</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../refs.html" title="下一页 页">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">参考</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By xinetzone<br/>
+  
+      &copy; Copyright 2021, xinetzone.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
