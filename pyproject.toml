@@ -37,10 +37,11 @@ doc = [
   "pandas",
   "matplotlib",
   "sphinxcontrib-mermaid",
-  "sphinx-panels",
+  # "sphinx-panels",
   "sphinx-design",
   "sphinx-inline-tabs",
   "sphinx-automodapi",
+  "sphinxcontrib-bibtex"
 ]
 
 [tool.flit.sdist]
