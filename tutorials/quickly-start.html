@@ -21,7 +21,7 @@
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
@@ -29,7 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/default.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
     
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
@@ -80,7 +80,7 @@ var addUtterances = () => {
 }
 commentsRunWhenDOMLoaded(addUtterances);
 </script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script src="../_static/translations.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/design-tabs.js"></script>
@@ -403,7 +403,7 @@ title="Print to PDF"
               <div>
                  <section class="tex2jax_ignore mathjax_ignore" id="makefile">
 <h1>Makefile 快速入门<a class="headerlink" href="#makefile" title="永久链接至标题">#</a></h1>
-<p>参考：<span id="id1">[<a class="reference internal" href="../refs.html#id3" title="Bruce A. Maxwell. A simple makefile tutorial. \url https://cs.colby.edu/maxwell/courses/tutorials/maketutor/.">Maxwell, n.d.</a>]</span>。</p>
+<p>参考：<span id="id1">[<a class="reference internal" href="../refs.html#id3" title="Bruce A. Maxwell. A simple makefile tutorial. https://cs.colby.edu/maxwell/courses/tutorials/maketutor/.">Maxwell, n.d.</a>]</span>。</p>
 <p><span class="guilabel">目标</span>：快速、轻松地为中小型项目创建自己的 Makefile。</p>
 <p>Makefile 是组织代码编译的一种简单方法。直接从例子开始：以下三个文件：<a class="reference download internal" download="" href="../_downloads/d35d0f872c20007f3cbfdaa2a13dd39d/hellomake.c"><code class="xref download docutils literal notranslate"><span class="pre">cpp/src/hellomake.c</span></code></a>、<a class="reference download internal" download="" href="../_downloads/35aac24a791479dd007c6bdc2bb732c7/hellofunc.c"><code class="xref download docutils literal notranslate"><span class="pre">cpp/src/hellofunc.c</span></code></a> 和 <a class="reference download internal" download="" href="../_downloads/fe3ae6a942ceaae1e59ad41baf3800f2/hellomake.h"><code class="xref download docutils literal notranslate"><span class="pre">cpp/include/hellomake.h</span></code></a>，分别代表典型的主程序、单独文件中的一些函数代码和 include 文件。</p>
 <div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
@@ -500,7 +500,7 @@ gcc -o hellomake hellomake.c hellofunc.c -I .
 </pre></div>
 </div>
 <p>那么，如果想把 <code class="docutils literal notranslate"><span class="pre">.h</span></code> 文件放在 <code class="docutils literal notranslate"><span class="pre">include/</span></code> 目录中，源代码放在 <code class="docutils literal notranslate"><span class="pre">src/</span></code> 目录中，而一些本地库放在 <code class="docutils literal notranslate"><span class="pre">lib/</span></code> 目录中，该怎么办呢？此外，能否隐藏那些到处挂着的烦人的 <code class="docutils literal notranslate"><span class="pre">.o</span></code>文件？答案当然是肯定的。下面的 Makefile 定义了 <code class="docutils literal notranslate"><span class="pre">include/</span></code> 和 <code class="docutils literal notranslate"><span class="pre">lib/</span></code> 目录的路径，并将对象文件放在 <code class="docutils literal notranslate"><span class="pre">obj/</span></code> 目录中。它还为您想要包含的任何库定义了宏，例如数学库 <code class="docutils literal notranslate"><span class="pre">-lm</span></code>。请注意，它还包括一个规则，用于在输入 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code> 时清理源目录和对象目录。<code class="docutils literal notranslate"><span class="pre">.PHONY</span></code> 规则防止 <strong class="program">make</strong> 对名为 <code class="docutils literal notranslate"><span class="pre">clean</span></code> 的文件进行操作。</p>
-<div class="highlight-Makefile notranslate"><div class="highlight"><pre><span></span><span class="nv">IIDIR</span> <span class="o">=</span> include
+<div class="highlight-Makefile notranslate"><div class="highlight"><pre><span></span><span class="nv">IDIR</span> <span class="o">=</span> include
 <span class="nv">CC</span> <span class="o">=</span> gcc
 <span class="nv">CFLAGS</span> <span class="o">=</span> -I <span class="k">$(</span>IDIR<span class="k">)</span>
 <span class="nv">ODIR</span> <span class="o">=</span> obj
