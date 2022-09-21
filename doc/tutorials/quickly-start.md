@@ -94,7 +94,7 @@ hellomake: $(OBJ)
 那么，如果想把 `.h` 文件放在 `include/` 目录中，源代码放在 `src/` 目录中，而一些本地库放在 `lib/` 目录中，该怎么办呢？此外，能否隐藏那些到处挂着的烦人的 `.o`文件？答案当然是肯定的。下面的 Makefile 定义了 `include/` 和 `lib/` 目录的路径，并将对象文件放在 `obj/` 目录中。它还为您想要包含的任何库定义了宏，例如数学库 `-lm`。请注意，它还包括一个规则，用于在输入 `make clean` 时清理源目录和对象目录。`.PHONY` 规则防止 {program}`make` 对名为 `clean` 的文件进行操作。
 
 ```Makefile
-IIDIR = include
+IDIR = include
 CC = gcc
 CFLAGS = -I $(IDIR)
 ODIR = obj
